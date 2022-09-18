@@ -1,4 +1,4 @@
-import Password from 'antd/lib/input/Password';
+
 import { makeAutoObservable, runInAction } from 'mobx';
 
 interface IUser {
@@ -10,11 +10,13 @@ interface IProcess {
     isloading: boolean;
     error: boolean;
 }
+interface IСontacts {
+    id: number;
+    name: string;
+    mobile: string;
+}
+export default class Store {
 
-export default class UserStore {
-    dataWords = [];
-    isloading = false;
-    error = false;
 
     usersArray = [];
     user: IUser | never[] = {
@@ -24,6 +26,11 @@ export default class UserStore {
     constructor() {
         makeAutoObservable(this);
     }
+    isloading = false;
+    error = false;
+    loggedIn: boolean = false;
+    userContacts = [];
+
     getUsers = async () => {
         this.isloading = true;
 
@@ -55,7 +62,7 @@ export default class UserStore {
     };
 
 
-    handleLogin = async (email: string, password: number | string) => {
+    handleLogin = async ({ email, password }: IUser) => {
         this.isloading = true;
 
         if (this.usersArray.length === 0) {
@@ -69,9 +76,44 @@ export default class UserStore {
                 },
             );
         });
-
+        if (this.user) {
+            this.loggedIn = true;
+            this.getContacts();
+        }
         this.isloading = false;
     };
+
+    getContacts = async () => {
+        this.isloading = true;
+
+        await fetch(`http://localhost:3001/contacts`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Что-то пошло не так ...');
+                }
+            })
+            .then((response) => {
+                runInAction(() => {
+                    this.userContacts = response;
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                runInAction(() => {
+                    this.isloading = false;
+                });
+            });
+    };
+
 
 }
 

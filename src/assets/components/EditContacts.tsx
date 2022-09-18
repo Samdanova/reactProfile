@@ -1,0 +1,1 @@
+import { inject, observer } from 'mobx-react';

@@ -1,24 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Login from './assets/components/Login';
+import 'antd/dist/antd.min.css';
+import RouteNavigate from './assets/components/Route/Route';
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
-      <Login
-        handleLogin={function (
-          email: string,
-          username: string,
-        ): Promise<void> {
-          throw new Error('Function not implemented');
+      <RouteNavigate
+        loggedIn={false}
+        handleLogin={function (email: string, password: string | number): Promise<void> {
+          throw new Error('Function not implemented.');
         }}
-        loading={false}
       />
     </div>
   );
 }
 
 export default App;
-
-

@@ -1,27 +1,28 @@
-import React from 'react';
-import './Login.scss';
+import React, { useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import { inject, observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
 interface ILogin {
     handleLogin: (email: string, password: string | number) => Promise<void>;
     loading: boolean;
 }
 
-const Login: React.FC<ILogin> = ({ handleLogin, loading }) => {
+function Login({ handleLogin, loading }: ILogin) {
     const navigate = useNavigate();
     const [form] = Form.useForm();
 
     const onFinish = async (values: { email: string; password: string }) => {
         handleLogin(values.email, values.password)
-            .then(() => navigate('/home'))
+            .then(() => navigate('/'))
             .catch((err) => console.log(err));
     };
 
     return (
         <div className="login-container">
             <Form
+                className='login-container__form'
                 form={form}
                 name="login"
                 onFinish={onFinish}
@@ -66,6 +67,7 @@ const Login: React.FC<ILogin> = ({ handleLogin, loading }) => {
 
                 <Button
                     htmlType="submit"
+                    className='login-container__button'
                     disabled={loading}
                 >
                     Войти
@@ -75,8 +77,8 @@ const Login: React.FC<ILogin> = ({ handleLogin, loading }) => {
     );
 };
 
-export default inject(({ UserStore }) => {
-    const { handleLogin, loading } = UserStore;
+export default inject(({ Store }) => {
+    const { handleLogin, loading } = Store;
 
     return {
         handleLogin,

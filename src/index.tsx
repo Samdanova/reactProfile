@@ -4,11 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'mobx-react';
-import UserStore from './assets/store/ContactsStore';
+import Store from './assets/store/Store';
 
 
 const store = {
-  UserStore: new UserStore(),
+  Store: new Store(),
 }
 
 const root = ReactDOM.createRoot(
