@@ -86,7 +86,7 @@ export default class Store {
     getContacts = async () => {
         this.isloading = true;
 
-        await fetch(`http://localhost:3001/contacts`, {
+        await fetch(`http://localhost:3000/contacts`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',

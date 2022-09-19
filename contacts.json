@@ -1,4 +1,5 @@
-[
+{
+  "contacts":[
   {
   	"name": "Cassio Zen",
     "mobile": 79136458345,
@@ -28,5 +29,5 @@
   	"name": "Sebastian Markbage",
     "mobile": 79136458345,
   	"email": "sebmarkbage@here.com"
-  }
-]
+  }]
+}
