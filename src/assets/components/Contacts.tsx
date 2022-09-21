@@ -51,7 +51,7 @@ function Contacts({ getContacts, userContacts }: IContactProps) {
 
     return (
         <div className='contacts-container'>
-            <Table columns={columns} dataSource={userContacts} />
+            <Table columns={columns} dataSource={userContacts} rowKey={(record) => record.id} />
             <Button>Выйти</Button>
         </div>
     )
@@ -61,6 +61,7 @@ export default inject(({ Store }) => {
     const { userContacts, getContacts } = Store;
 
     return {
-        userContacts
+        userContacts,
+        getContacts
     };
 })(observer(Contacts));

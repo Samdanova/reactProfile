@@ -86,7 +86,7 @@ export default class Store {
     getContacts = async () => {
         this.isloading = true;
 
-        await fetch(`http://localhost:3001/contacts`, {
+        await fetch(`http://localhost:3000/contacts`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
@@ -102,6 +102,7 @@ export default class Store {
             .then((response) => {
                 runInAction(() => {
                     this.userContacts = response;
+                    console.log(this.userContacts)
                 });
             })
             .catch((err) => {

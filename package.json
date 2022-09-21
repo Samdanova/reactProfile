@@ -23,8 +23,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
+    "startClient": "react-scripts start",
+    "startDB": "json-server --watch contacts.json --port 3000",
+    "start": "concurrently \"npm startClient\" \"npm startDB\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
