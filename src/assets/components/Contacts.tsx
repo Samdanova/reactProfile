@@ -7,9 +7,12 @@ import type { FilterConfirmProps } from 'antd/es/table/interface';
 import React, { useRef, useState } from 'react';
 import Highlighter from "react-highlight-words";
 
+import { IUser } from '../store/Store';
+
 interface IContactProps {
-    getContacts: () => void;
+    getContacts?: () => void;
     userContacts: ContactsType[];
+    user: IUser;
     loading?: boolean;
     // errload: boolean;
     handleDelleteContact?: (id: number) => void;
@@ -22,11 +25,9 @@ interface ContactsType {
     email: string;
 }
 
-function Contacts({ getContacts, userContacts }: IContactProps) {
+function Contacts({ user, userContacts }: IContactProps) {
 
     type DataIndex = keyof ContactsType;
-
-
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
@@ -53,7 +54,7 @@ function Contacts({ getContacts, userContacts }: IContactProps) {
             <div style={{ padding: 8 }}>
                 <Input
                     ref={searchInput}
-                    placeholder={`Search ${dataIndex}`}
+                    placeholder={`Введите значение`}
                     value={selectedKeys[0]}
                     onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
                     onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
@@ -67,14 +68,14 @@ function Contacts({ getContacts, userContacts }: IContactProps) {
                         size="small"
                         style={{ width: 90 }}
                     >
-                        Search
+                        Поиск
                     </Button>
                     <Button
                         onClick={() => clearFilters && handleReset(clearFilters)}
                         size="small"
                         style={{ width: 90 }}
                     >
-                        Reset
+                        Отмена
                     </Button>
                     <Button
                         type="link"
@@ -85,7 +86,7 @@ function Contacts({ getContacts, userContacts }: IContactProps) {
                             setSearchedColumn(dataIndex);
                         }}
                     >
-                        Filter
+                        Сбросить
                     </Button>
                 </Space>
             </div>
@@ -156,9 +157,10 @@ function Contacts({ getContacts, userContacts }: IContactProps) {
 }
 
 export default inject(({ Store }) => {
-    const { userContacts, getContacts } = Store;
+    const { userContacts, getContacts, user } = Store;
 
     return {
+        user,
         userContacts,
         getContacts
     };

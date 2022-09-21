@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom';
-import contacts from '../../../contacts.json'
-import Contacts from './Contacts';
+
+
+import { IUser } from '../store/Store';
 
 interface IAuthProps {
     children: React.ReactNode;
@@ -19,7 +20,9 @@ function Auth({ children, loggedIn }: IAuthProps) {
         return <Navigate to="/login" />;
     }
     return <>
+        <div>Добро пожаловать, { }</div>
         {children}
+
     </>;
 };
 

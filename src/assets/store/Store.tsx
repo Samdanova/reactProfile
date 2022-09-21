@@ -1,7 +1,7 @@
 
 import { makeAutoObservable, runInAction } from 'mobx';
 
-interface IUser {
+export interface IUser {
     email: string;
     password: string | number;
 }
@@ -17,15 +17,14 @@ interface IСontacts {
 }
 export default class Store {
 
-
+    constructor() {
+        makeAutoObservable(this);
+    }
     usersArray = [];
     user: IUser | never[] = {
         email: '',
         password: ''
     };
-    constructor() {
-        makeAutoObservable(this);
-    }
     isloading = false;
     error = false;
     loggedIn: boolean = false;
