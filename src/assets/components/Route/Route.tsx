@@ -1,9 +1,9 @@
 import { inject, observer } from 'mobx-react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from '../Login/Login';
-// import Contacts from './assets/components/Contacts';
-import Auth from '../Auth';
+import Auth from '../Auth/Auth';
 import Contacts from '../Contacts';
+import { IUser } from '../../store/Store';
 
 
 interface IRouteMenuProps {
@@ -20,7 +20,6 @@ function RouteNavigate({ loggedIn, handleLogin }: IRouteMenuProps) {
                         path="/"
                         element={
                             <Auth loggedIn={loggedIn}>
-
                                 <Contacts
                                     getContacts={function (): void {
                                         throw new Error('Function not implemented');
@@ -48,10 +47,11 @@ function RouteNavigate({ loggedIn, handleLogin }: IRouteMenuProps) {
 
 
 export default inject(({ Store }) => {
-    const { loggedIn, handleLogin } = Store;
+    const { loggedIn, handleLogin, user } = Store;
 
     return {
         loggedIn,
         handleLogin,
+        user
     };
 })(observer(RouteNavigate));

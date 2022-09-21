@@ -4,7 +4,7 @@ import type { InputRef } from 'antd';
 import { Button, Input, Space, Table } from 'antd';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Highlighter from "react-highlight-words";
 
 import { IUser } from '../store/Store';
@@ -12,7 +12,6 @@ import { IUser } from '../store/Store';
 interface IContactProps {
     getContacts?: () => void;
     userContacts: ContactsType[];
-    user: IUser;
     loading?: boolean;
     // errload: boolean;
     handleDelleteContact?: (id: number) => void;
@@ -25,7 +24,7 @@ interface ContactsType {
     email: string;
 }
 
-function Contacts({ user, userContacts }: IContactProps) {
+function Contacts({ userContacts }: IContactProps) {
 
     type DataIndex = keyof ContactsType;
 

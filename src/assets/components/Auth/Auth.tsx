@@ -1,7 +1,7 @@
+import { inject, observer } from 'mobx-react';
 import { Navigate } from 'react-router-dom';
+import "./Auth.css"
 
-
-import { IUser } from '../store/Store';
 
 interface IAuthProps {
     children: React.ReactNode;
@@ -12,7 +12,7 @@ interface iContacts {
     id: number;
     name: string;
     mobile: number;
-    email: string
+    email: string;
 }
 
 function Auth({ children, loggedIn }: IAuthProps) {
@@ -20,10 +20,14 @@ function Auth({ children, loggedIn }: IAuthProps) {
         return <Navigate to="/login" />;
     }
     return <>
-        <div>Добро пожаловать, { }</div>
-        {children}
-
-    </>;
+        <div className="welcome">Добро пожаловать! Ваши контакты:</div>
+        {children};
+    </>
 };
 
-export default Auth;
+export default inject(({ Store }) => {
+    const { user } = Store;
+    return {
+        user
+    };
+})(observer(Auth));

@@ -2,8 +2,10 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 
 export interface IUser {
+    id?: number;
     email: string;
     password: string | number;
+    name?: string;
 }
 
 interface IProcess {
@@ -23,7 +25,8 @@ export default class Store {
     usersArray = [];
     user: IUser | never[] = {
         email: '',
-        password: ''
+        password: '',
+        name: ''
     };
     isloading = false;
     error = false;
