@@ -20,6 +20,8 @@ function Login({ handleLogin, loading }: ILogin) {
     };
 
     return (
+        <>
+        <div className='login_welcome'>Glad to see you! <br></br>Enter your login and password for access in your book</div>
         <div className="login-container">
             <Form
                 className='login-container__form'
@@ -37,11 +39,11 @@ function Login({ handleLogin, loading }: ILogin) {
                     rules={[
                         {
                             type: 'email',
-                            message: 'Допускается только E-mail',
+                            message: 'Incorrect format',
                         },
                         {
                             required: true,
-                            message: 'Обязательное поле',
+                            message: 'Required field',
                         },
                     ]}>
                     <Input
@@ -52,15 +54,15 @@ function Login({ handleLogin, loading }: ILogin) {
 
                 <Form.Item
                     name="password"
-                    label="Пароль"
+                    label="Password"
                     rules={[
                         {
                             required: true,
-                            message: 'Обязательное поле',
+                            message: 'Required field',
                         },
                     ]}>
                     <Input.Password
-                        placeholder="Пароль"
+                        placeholder="Password"
                         disabled={loading}
                     />
                 </Form.Item>
@@ -74,6 +76,7 @@ function Login({ handleLogin, loading }: ILogin) {
                 </Button>
             </Form>
         </div>
+        </>
     );
 };
 
