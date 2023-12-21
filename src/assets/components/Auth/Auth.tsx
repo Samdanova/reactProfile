@@ -20,7 +20,7 @@ function Auth({ children, loggedIn }: IAuthProps) {
         return <Navigate to="/login" />;
     }
     return <>
-        <div className="welcome">Добро пожаловать! Ваши контакты:</div>
+        <div className="welcome">Welcome! Your contacts:</div>
         {children};
     </>
 };

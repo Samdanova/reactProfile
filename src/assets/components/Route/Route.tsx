@@ -2,7 +2,7 @@ import { inject, observer } from 'mobx-react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from '../Login/Login';
 import Auth from '../Auth/Auth';
-import Contacts from '../Contacts';
+import Contacts from '../Contacts/Contacts';
 import { IUser } from '../../store/Store';
 
 

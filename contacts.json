@@ -2,15 +2,9 @@
   "contacts": [
     {
       "id": 1,
-      "name": "Cassio Zen",
-      "mobile": 79136458345,
-      "email": "cassiozen@gmail.com"
-    },
-    {
-      "id": 3,
-      "name": "Pete Hunt",
-      "mobile": 79136458345,
-      "email": "floydophone@somewhere.com"
+      "name": "Cassi Zen",
+      "mobile": "44444444",
+      "email": "123@gmail.com"
     },
     {
       "id": 4,
@@ -29,6 +23,18 @@
       "name": "Sebastian Markbage",
       "mobile": 79136458345,
       "email": "sebmarkbage@here.com"
+    },
+    {
+      "name": "Jon Ray",
+      "mobile": "0534056782",
+      "id": 7,
+      "email": "jon@gmail.com"
+    },
+    {
+      "name": "Keila",
+      "email": "keila2@gmail.com",
+      "mobile": "567456346",
+      "id": 8
     }
   ]
 }

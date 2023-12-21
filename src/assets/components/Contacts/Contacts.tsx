@@ -1,36 +1,57 @@
 import { inject, observer } from 'mobx-react';
 import { SearchOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
-import { Button, Input, Space, Table } from 'antd';
+import { Button, Input, Space, Table, Modal } from 'antd';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import Highlighter from "react-highlight-words";
+import AddEditContact from './EditAddContacts/EditContacts'
 
-import { IUser } from '../store/Store';
 
 interface IContactProps {
     getContacts?: () => void;
-    userContacts: ContactsType[];
+    userContacts: IContactsType[];
     loading?: boolean;
     logOut: ()=>void;
     handleDeleteContact: (id: number) => void;
 }
 
-interface ContactsType {
+interface IContactsType {
     id: number;
     name: string;
-    mobile: number;
+    phone: string;
     email: string;
 }
 
 function Contacts({ userContacts, logOut, handleDeleteContact }: IContactProps) {
+    const [isAddContactModal, setIsAddContactModal] = useState(false);
+    const [isEditContactModal, setIsEditContactModal] = useState(false);
+    const [oneContact, setOneContact] = useState<IContactsType | null>(null);
 
-    type DataIndex = keyof ContactsType;
+    type DataIndex = keyof IContactsType;
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef<InputRef>(null);
+
+
+    const handleModalAddContactCancel = () => {
+        setIsAddContactModal(false);
+      };
+    
+      const handleModalEditContactCancel = () => {
+        setIsEditContactModal(false);
+        setOneContact(null);
+      };
+
+      const onToggleModalAdd = useCallback(() => {
+        setIsAddContactModal((prevState) => !prevState);
+      }, []);
+    
+      const onToggleModalEdit = useCallback(() => {
+        setIsEditContactModal((prevState) => !prevState);
+      }, []);
 
     const handleDelete = (id:number)=>{
         handleDeleteContact(id);
@@ -51,12 +72,12 @@ function Contacts({ userContacts, logOut, handleDeleteContact }: IContactProps) 
         setSearchText('');
     };
 
-    const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<ContactsType> => ({
+    const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<IContactsType> => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
             <div style={{ padding: 8 }}>
                 <Input
                     ref={searchInput}
-                    placeholder={`Введите значение`}
+                    placeholder={`Input value`}
                     value={selectedKeys[0]}
                     onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
                     onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
@@ -70,14 +91,14 @@ function Contacts({ userContacts, logOut, handleDeleteContact }: IContactProps) 
                         size="small"
                         style={{ width: 90 }}
                     >
-                        Поиск
+                        Search
                     </Button>
                     <Button
                         onClick={() => clearFilters && handleReset(clearFilters)}
                         size="small"
                         style={{ width: 90 }}
                     >
-                        Отмена
+                        Cancel
                     </Button>
                     <Button
                         type="link"
@@ -88,7 +109,7 @@ function Contacts({ userContacts, logOut, handleDeleteContact }: IContactProps) 
                             setSearchedColumn(dataIndex);
                         }}
                     >
-                        Сбросить
+                        Discard
                     </Button>
                 </Space>
             </div>
@@ -118,19 +139,19 @@ function Contacts({ userContacts, logOut, handleDeleteContact }: IContactProps) 
                 text
             ),
     });
-    const columns: ColumnsType<ContactsType> = [
+    const columns: ColumnsType<IContactsType> = [
         {
-            title: 'Имя',
+            title: 'Name',
             dataIndex: 'name',
             key: 'name',
             render: text => <a>{text}</a>,
             ...getColumnSearchProps('name'),
         },
         {
-            title: 'Номер',
+            title: 'Number',
             dataIndex: 'mobile',
             key: 'mobile',
-            ...getColumnSearchProps('mobile'),
+            ...getColumnSearchProps('phone'),
         },
         {
             title: 'E-mail',
@@ -139,22 +160,63 @@ function Contacts({ userContacts, logOut, handleDeleteContact }: IContactProps) 
             ...getColumnSearchProps('email')
         },
         {
-            title: 'Внести изменение',
+            title: 'Operation',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button>Редактировать</Button>
-                    <Button onClick={()=>handleDelete(record.id)}>Удалить</Button>
+                    <Button onClick={(e)=>{
+e.preventDefault();
+                         setIsEditContactModal(true);
+                         setOneContact(record);
+                    }}>Edit</Button>
+                    <Button onClick={()=>handleDelete(record.id)}>Delete</Button>
                 </Space>
             ),
         },
     ];
 
     return (
+        <>
         <div className='contacts-container'>
             <Table columns={columns} dataSource={userContacts} rowKey={(record) => record.id} />
-            <Button onClick={logOut}>Выйти</Button>
+            <Button onClick={logOut}>Log out</Button>
+            <Button
+              onClick={() => setIsAddContactModal(true)}
+              type="primary"
+            >
+              Add contact
+            </Button>
         </div>
+
+{isAddContactModal && (
+    <Modal
+    open={isAddContactModal} 
+      title="Adding contact"
+      onCancel={handleModalAddContactCancel}
+      footer={null}>
+      <AddEditContact
+        loading={false}
+        onToogleModal={onToggleModalAdd}
+      />
+    </Modal>
+  )}
+
+  {isEditContactModal && (
+    <Modal
+    open={isEditContactModal} 
+      title="Editting contact"
+      onCancel={handleModalEditContactCancel}
+      footer={null}>
+      {oneContact && (
+        <AddEditContact
+          oneContact={oneContact}
+          loading={false}
+          onToogleModal={onToggleModalEdit}
+        />
+      )}
+    </Modal>
+  )}
+</>
     )
 }
 

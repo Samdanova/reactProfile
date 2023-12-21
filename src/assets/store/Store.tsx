@@ -16,6 +16,7 @@ interface IСontacts {
     id: number;
     name: string;
     mobile: number;
+    email:string;
 }
 export default class Store {
 
@@ -63,29 +64,7 @@ export default class Store {
             });
     };
 
-
-handleLogin = async ({ email, password }: IUser) => {
-        this.isloading = true;
-
-        if (this.usersArray.length === 0) {
-            await this.getUsers();
-        }
-
-        runInAction(() => {
-            this.user = this.usersArray.filter(
-                (user: { email: string; password: string | number; }) => {
-                    return user.password === password && user.email === email;
-                },
-            );
-        });
-        if (this.user) {
-            this.loggedIn = true;
-            this.getContacts();
-        }
-        this.isloading = false;
-    };
-
-getContacts = async () => {
+    getContacts = async () => {
         this.isloading = true;
 
         await fetch(`http://localhost:3001/contacts/`, {
@@ -116,6 +95,93 @@ getContacts = async () => {
                 });
             });
     };
+handleLogin = async ({ email, password }: IUser) => {
+        this.isloading = true;
+
+        if (this.usersArray.length === 0) {
+            await this.getUsers();
+        }
+
+        runInAction(() => {
+            this.user = this.usersArray.filter(
+                (user: { email: string; password: string | number; }) => {
+                    return user.password === password && user.email === email;
+                },
+            );
+        });
+        if (this.user) {
+            this.loggedIn = true;
+            this.getContacts();
+        }
+        this.isloading = false;
+    };
+
+    handleAddContact = async (
+        name: string,
+        email: string,
+        mobile: string,
+      ) => {
+        this.isloading = true;
+        this.error = false;
+    
+        await fetch(`http://localhost:3001/contacts`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            mobile,
+          }),
+        })
+          .then(() => {
+            this.getContacts();
+          })
+          .catch((err) => {
+            console.log(err);
+            this.error = true;
+          })
+          .finally(() => {
+            runInAction(() => {
+              this.isloading = false;
+            });
+          });
+      };
+
+handleEditContact = async (
+        id: number,
+        name: string,
+        email: string,
+        mobile: string,
+      ) => {
+        this.isloading = true;
+        this.error = false;
+        await fetch(`http://localhost:3001/contacts/${id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+          },
+          body: JSON.stringify({
+            id,
+            name,
+            email,
+            mobile,
+          }),
+        })
+          .then(() => {
+            this.getContacts();
+          })
+          .catch((err) => {
+            console.log(err);
+            this.error = true;
+          })
+          .finally(() => {
+            runInAction(() => {
+              this.isloading = false;
+            });
+          });
+      };
 
 logOut= async()=>{
     runInAction(()=>{
