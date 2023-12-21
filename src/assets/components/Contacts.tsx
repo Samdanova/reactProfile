@@ -13,8 +13,8 @@ interface IContactProps {
     getContacts?: () => void;
     userContacts: ContactsType[];
     loading?: boolean;
-    // errload: boolean;
-    handleDelleteContact?: (id: number) => void;
+    logOut: ()=>void;
+    handleDeleteContact: (id: number) => void;
 }
 
 interface ContactsType {
@@ -24,7 +24,7 @@ interface ContactsType {
     email: string;
 }
 
-function Contacts({ userContacts }: IContactProps) {
+function Contacts({ userContacts, logOut, handleDeleteContact }: IContactProps) {
 
     type DataIndex = keyof ContactsType;
 
@@ -32,6 +32,9 @@ function Contacts({ userContacts }: IContactProps) {
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef<InputRef>(null);
 
+    const handleDelete = (id:number)=>{
+        handleDeleteContact(id);
+    }
 
     const handleSearch = (
         selectedKeys: string[],
@@ -141,7 +144,7 @@ function Contacts({ userContacts }: IContactProps) {
             render: (_, record) => (
                 <Space size="middle">
                     <Button>Редактировать</Button>
-                    <Button>Удалить</Button>
+                    <Button onClick={()=>handleDelete(record.id)}>Удалить</Button>
                 </Space>
             ),
         },
@@ -150,17 +153,19 @@ function Contacts({ userContacts }: IContactProps) {
     return (
         <div className='contacts-container'>
             <Table columns={columns} dataSource={userContacts} rowKey={(record) => record.id} />
-            <Button>Выйти</Button>
+            <Button onClick={logOut}>Выйти</Button>
         </div>
     )
 }
 
 export default inject(({ Store }) => {
-    const { userContacts, getContacts, user } = Store;
+    const { userContacts, getContacts, user, logOut, handleDeleteContact } = Store;
 
     return {
         user,
         userContacts,
-        getContacts
+        getContacts,
+        logOut,
+        handleDeleteContact
     };
 })(observer(Contacts));

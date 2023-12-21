@@ -15,7 +15,7 @@ interface IProcess {
 interface IСontacts {
     id: number;
     name: string;
-    mobile: string;
+    mobile: number;
 }
 export default class Store {
 
@@ -64,7 +64,7 @@ export default class Store {
     };
 
 
-    handleLogin = async ({ email, password }: IUser) => {
+handleLogin = async ({ email, password }: IUser) => {
         this.isloading = true;
 
         if (this.usersArray.length === 0) {
@@ -85,10 +85,10 @@ export default class Store {
         this.isloading = false;
     };
 
-    getContacts = async () => {
+getContacts = async () => {
         this.isloading = true;
 
-        await fetch(`http://localhost:3000/contacts`, {
+        await fetch(`http://localhost:3001/contacts/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
@@ -117,6 +117,37 @@ export default class Store {
             });
     };
 
+logOut= async()=>{
+    runInAction(()=>{
+        this.loggedIn = false;
+})
+}
+
+handleDeleteContact = async (
+    id: number,
+  ) => {
+    this.isloading = true;
+    this.error = false;
+
+    await fetch(`http://localhost:3001/contacts/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+    })
+      .then(() => {
+        this.getContacts();
+      })
+      .catch((err) => {
+        console.log(err);
+        this.error = true;
+      })
+      .finally(() => {
+        runInAction(() => {
+          this.isloading = false;
+        });
+      });
+  };
 
 }
 

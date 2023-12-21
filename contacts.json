@@ -1,39 +1,34 @@
 {
-  "contacts":[
-  {
-    "id":1,
-  	"name": "Cassio Zen",
-    "mobile": 79136458345,
-  	"email": "cassiozen@gmail.com"
-  },
-  {
-    "id":2,
-  	"name": "Dan Abramov",
-    "mobile": 79136458345,
-  	"email": "gaearon@somewhere.com"
-  },
-  {
-    "id":3,
-  	"name": "Pete Hunt",
-    "mobile": 79136458345,
-  	"email": "floydophone@somewhere.com"
-  },
-  {
-    "id":4,
-  	"name": "Paul O’Shannessy",
-    "mobile": 79136458345,
-  	"email": "zpao@somewhere.com"
-  },
-  {
-    "id":5,
-  	"name": "Ryan Florence",
-    "mobile": 79136458345,
-  	"email": "rpflorence@somewhere.com"
-  },
-  {
-    "id":6,
-  	"name": "Sebastian Markbage",
-    "mobile": 79136458345,
-  	"email": "sebmarkbage@here.com"
-  }]
+  "contacts": [
+    {
+      "id": 1,
+      "name": "Cassio Zen",
+      "mobile": 79136458345,
+      "email": "cassiozen@gmail.com"
+    },
+    {
+      "id": 3,
+      "name": "Pete Hunt",
+      "mobile": 79136458345,
+      "email": "floydophone@somewhere.com"
+    },
+    {
+      "id": 4,
+      "name": "Paul O’Shannessy",
+      "mobile": 79136458345,
+      "email": "zpao@somewhere.com"
+    },
+    {
+      "id": 5,
+      "name": "Ryan Florence",
+      "mobile": 79136458345,
+      "email": "rpflorence@somewhere.com"
+    },
+    {
+      "id": 6,
+      "name": "Sebastian Markbage",
+      "mobile": 79136458345,
+      "email": "sebmarkbage@here.com"
+    }
+  ]
 }

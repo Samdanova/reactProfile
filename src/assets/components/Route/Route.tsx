@@ -11,7 +11,7 @@ interface IRouteMenuProps {
     handleLogin: (email: string, password: string | number) => Promise<void>;
 }
 
-function RouteNavigate({ loggedIn, handleLogin }: IRouteMenuProps) {
+function RouteNavigate({ loggedIn, handleLogin}: IRouteMenuProps) {
     return (
         <div className="App">
             <Router>
@@ -25,6 +25,12 @@ function RouteNavigate({ loggedIn, handleLogin }: IRouteMenuProps) {
                                         throw new Error('Function not implemented');
                                     }}
                                     userContacts={[]}
+                                    logOut={function (): void {
+                                        throw new Error('Function not implemented'); 
+                                }}
+                                handleDeleteContact={function(id:number):void{
+                                    throw new Error('Function not implemented')
+                                }}
                                 />
                             </Auth>
                         }
@@ -52,6 +58,6 @@ export default inject(({ Store }) => {
     return {
         loggedIn,
         handleLogin,
-        user
+        user,
     };
 })(observer(RouteNavigate));
