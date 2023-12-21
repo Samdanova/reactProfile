@@ -6,8 +6,8 @@ import type { ColumnsType, ColumnType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import { useRef, useState, useCallback } from 'react';
 import Highlighter from "react-highlight-words";
-import AddEditContact from './EditAddContacts/EditContacts'
-
+import AddEditContact from './EditAddContacts/EditContacts';
+import  './Contacts.css';
 
 interface IContactProps {
     getContacts?: () => void;
@@ -160,16 +160,16 @@ function Contacts({ userContacts, logOut, handleDeleteContact }: IContactProps) 
             ...getColumnSearchProps('email')
         },
         {
-            title: 'Operation',
+            title: 'Actions',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button onClick={(e)=>{
-e.preventDefault();
+                    <Button   className='button button__edit' onClick={(e)=>{
+                        e.preventDefault();
                          setIsEditContactModal(true);
                          setOneContact(record);
                     }}>Edit</Button>
-                    <Button onClick={()=>handleDelete(record.id)}>Delete</Button>
+                    <Button  className='button button__delete' onClick={()=>handleDelete(record.id)}>Delete</Button>
                 </Space>
             ),
         },
@@ -177,17 +177,17 @@ e.preventDefault();
 
     return (
         <>
-        <div className='contacts-container'>
-            <Table columns={columns} dataSource={userContacts} rowKey={(record) => record.id} />
-            <Button onClick={logOut}>Log out</Button>
-            <Button
-              onClick={() => setIsAddContactModal(true)}
-              type="primary"
-            >
-              Add contact
-            </Button>
-        </div>
-
+<div className='contacts-container'>
+    <Button onClick={() => setIsAddContactModal(true)} className='button'>
+        Add new contact
+    </Button>
+    <Table
+        columns={columns}
+        dataSource={userContacts}
+        rowKey={(record) => record.id}
+     />
+    <Button onClick={logOut} className='button'>Log out</Button>
+</div>
 {isAddContactModal && (
     <Modal
     open={isAddContactModal} 

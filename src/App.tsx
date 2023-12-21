@@ -1,5 +1,5 @@
-import './App.css';
 import 'antd/dist/antd.min.css';
+import './App.css';
 import RouteNavigate from './assets/components/Route/Route';
 
 const App: React.FC = () => {

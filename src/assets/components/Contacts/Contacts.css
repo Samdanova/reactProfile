@@ -1,0 +1,37 @@
+.button{
+    display: flex;
+  align-items: center;
+  justify-content: center;
+    margin-bottom: 5%;
+    padding: 1rem;
+    border-radius: 4px;
+    border: solid 2px rgb(5, 15, 80);
+    background-color: rgba(36, 86, 213, 0.593);
+    color:white;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 0px 0px hsla(190deg, 15%, 5%, .2);
+
+}
+
+.button:hover{
+    color:white;
+    border: solid 2px rgb(5, 15, 80);
+    background-color: rgba(26, 61, 148, 0.593);
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.button__edit{
+    background-color: rgb(197, 165, 75);
+}
+.button__edit:hover{
+    background-color: rgb(113, 93, 38);;
+}
+
+.button__delete{
+    background-color: rgb(145, 26, 21);
+}
+.button__delete:hover{
+    background-color: rgb(118, 36, 15);;
+}
+
