@@ -1,4 +1,5 @@
 For launching :
 
 - npm install
-- npm run start
+- npm run startDB
+  -npm run startClient
