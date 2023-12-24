@@ -13,19 +13,18 @@ interface IRouteMenuProps {
 
 function RouteNavigate({ loggedIn, handleLogin}: IRouteMenuProps) {
     useEffect(() => {
-        const local_password = localStorage.getItem('password');
-        const local_email = localStorage.getItem('email');
-        if (local_email && local_password) {
-            loggedIn=true;
-          handleLogin(local_email, local_password);
-        }
-      }, []);
+            const local_password = localStorage.getItem('password');
+            const local_email = localStorage.getItem('email');
+            if (local_email && local_password) {
+              handleLogin(local_email, local_password);
+            };
+            }, [localStorage.getItem('password'), localStorage.getItem('email')]);
     return (
         <div className="App">
             <Router>
                 <Routes>
                     <Route
-                        path="/home"
+                        path="/"
                         element={
                             <Auth loggedIn={loggedIn}>
                                 <Contacts

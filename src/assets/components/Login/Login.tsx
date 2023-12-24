@@ -15,7 +15,7 @@ function Login({ handleLogin, loading }: ILogin) {
 
     const onFinish = async (values: { email: string; password: string }) => {
         handleLogin(values.email, values.password)
-            .then(() => navigate('/home'))
+            .then(() => navigate('/'))
             .catch((err) => console.log(err));
     };
 
@@ -30,8 +30,8 @@ function Login({ handleLogin, loading }: ILogin) {
                 onFinish={onFinish}
                 scrollToFirstError
                 initialValues={{
-                    email: '',
-                    password: '',
+                    email: '' || localStorage.getItem('email'),
+                    password: '' || localStorage.getItem('password'),
                 }}>
                 <Form.Item
                     name="email"

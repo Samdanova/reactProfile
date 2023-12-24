@@ -8,16 +8,16 @@ export interface IUser {
     name?: string;
 }
 
-interface IProcess {
-    isloading: boolean;
-    error: boolean;
-}
-interface IСontacts {
-    id: number;
-    name: string;
-    mobile: number;
-    email:string;
-}
+// interface IProcess {
+//     isloading: boolean;
+//     error: boolean;
+// }
+// interface IСontacts {
+//     id: number;
+//     name: string;
+//     mobile: number;
+//     email:string;
+// }
 export default class Store {
 
     constructor() {
@@ -98,7 +98,6 @@ export default class Store {
     };
 handleLogin = async (email:string, password:string) => {
         this.isloading = true;
-
         if (this.usersArray.length === 0) {
             await this.getUsers();
         }
@@ -111,31 +110,16 @@ handleLogin = async (email:string, password:string) => {
       if (foundUser) {
         runInAction(() => {
           this.user = foundUser;
-
           this.loggedIn = true;
+          if(localStorage.getItem('email')){
+            const local_password = localStorage.getItem('password');
+            const local_email = localStorage.getItem('email');
+          } else{
+            localStorage.setItem('email', email);
+            localStorage.setItem('password', password);
+            localStorage.setItem('loggedIn', 'true');
+          }
           this.getContacts();
-      });
-    }
-    if (Object.values(this.user).length === 1) {
-      const local_username = localStorage.getItem('username');
-      const local_email = localStorage.getItem('email');
-      const local_loggdin = Boolean(localStorage.getItem('loggedIn'));
-      runInAction(() => {
-        if (local_username  && local_email) {
-          // this.userName = Object.values(this.userOne)[0].name;
-          // this.userEmail = LOCAL_EMAIL;
-          // this.userUsername = LOCAL_USERNAME;
-          this.loggedIn = local_loggdin;
-        } else {
-          // this.userName = Object.values(this.userOne)[0].name;
-          // this.userEmail = Object.values(this.userOne)[0].email;
-          // this.userUsername = Object.values(this.userOne)[0].username;
-          this.loggedIn = true;
-          localStorage.setItem('email', email);
-          localStorage.setItem('password', password);
-          localStorage.setItem('loggedIn', 'true');
-        }
-        this.getContacts();
       });
     }
   this.isloading = false;
