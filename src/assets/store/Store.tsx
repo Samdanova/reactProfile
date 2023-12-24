@@ -1,10 +1,10 @@
 
+import { Console } from 'console';
 import { makeAutoObservable, runInAction } from 'mobx';
 
 export interface IUser {
-    id?: number;
     email: string;
-    password: string | number;
+    password: string;
     name?: string;
 }
 
@@ -24,7 +24,7 @@ export default class Store {
         makeAutoObservable(this);
     }
     usersArray = [];
-    user: IUser | never[] = {
+    user: IUser | never[]= {
         email: '',
         password: '',
         name: ''
@@ -52,7 +52,8 @@ export default class Store {
             })
             .then((response) => {
                 runInAction(() => {
-                    this.usersArray = response;
+                    this.usersArray = response
+                    console.log(this.usersArray);
                 });
             })
             .catch((err) => {
@@ -95,25 +96,49 @@ export default class Store {
                 });
             });
     };
-handleLogin = async ({ email, password }: IUser) => {
+handleLogin = async (email:string, password:string) => {
         this.isloading = true;
 
         if (this.usersArray.length === 0) {
             await this.getUsers();
         }
 
+        const foundUser = this.usersArray.find(
+          (user: { email: string; password: string | number; }) => {
+              return user.password === password && user.email === email;
+          },
+      );
+      if (foundUser) {
         runInAction(() => {
-            this.user = this.usersArray.filter(
-                (user: { email: string; password: string | number; }) => {
-                    return user.password === password && user.email === email;
-                },
-            );
-        });
-        if (this.user) {
-            this.loggedIn = true;
-            this.getContacts();
+          this.user = foundUser;
+
+          this.loggedIn = true;
+          this.getContacts();
+      });
+    }
+    if (Object.values(this.user).length === 1) {
+      const local_username = localStorage.getItem('username');
+      const local_email = localStorage.getItem('email');
+      const local_loggdin = Boolean(localStorage.getItem('loggedIn'));
+      runInAction(() => {
+        if (local_username  && local_email) {
+          // this.userName = Object.values(this.userOne)[0].name;
+          // this.userEmail = LOCAL_EMAIL;
+          // this.userUsername = LOCAL_USERNAME;
+          this.loggedIn = local_loggdin;
+        } else {
+          // this.userName = Object.values(this.userOne)[0].name;
+          // this.userEmail = Object.values(this.userOne)[0].email;
+          // this.userUsername = Object.values(this.userOne)[0].username;
+          this.loggedIn = true;
+          localStorage.setItem('email', email);
+          localStorage.setItem('password', password);
+          localStorage.setItem('loggedIn', 'true');
         }
-        this.isloading = false;
+        this.getContacts();
+      });
+    }
+  this.isloading = false;
     };
 
     handleAddContact = async (
@@ -186,6 +211,9 @@ handleEditContact = async (
 logOut= async()=>{
     runInAction(()=>{
         this.loggedIn = false;
+        localStorage.removeItem('password');
+        localStorage.removeItem('email');
+        localStorage.removeItem('loggedIn');
 })
 }
 

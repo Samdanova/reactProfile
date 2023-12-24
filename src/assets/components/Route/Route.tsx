@@ -1,9 +1,9 @@
+import { useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from '../Login/Login';
 import Auth from '../Auth/Auth';
 import Contacts from '../Contacts/Contacts';
-import { IUser } from '../../store/Store';
 
 
 interface IRouteMenuProps {
@@ -12,12 +12,20 @@ interface IRouteMenuProps {
 }
 
 function RouteNavigate({ loggedIn, handleLogin}: IRouteMenuProps) {
+    useEffect(() => {
+        const local_password = localStorage.getItem('password');
+        const local_email = localStorage.getItem('email');
+        if (local_email && local_password) {
+            loggedIn=true;
+          handleLogin(local_email, local_password);
+        }
+      }, []);
     return (
         <div className="App">
             <Router>
                 <Routes>
                     <Route
-                        path="/"
+                        path="/home"
                         element={
                             <Auth loggedIn={loggedIn}>
                                 <Contacts

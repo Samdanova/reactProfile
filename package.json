@@ -30,7 +30,8 @@
     "startDB": "json-server --watch contacts.json --port 3001",
     "start": "concurrently \"npm startClient\" \"npm startDB\"",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start:debug": "react-scripts --inspect-brk start"
   },
   "eslintConfig": {
     "extends": [

@@ -39,3 +39,9 @@ background-color: rgba(130, 152, 208, 0.785);
   font-size: 2rem;
   font-weight: bold;
 }
+
+.ant-form-item-label>label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color:  rgb(5, 15, 80);
+}

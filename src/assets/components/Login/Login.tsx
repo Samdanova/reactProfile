@@ -15,7 +15,7 @@ function Login({ handleLogin, loading }: ILogin) {
 
     const onFinish = async (values: { email: string; password: string }) => {
         handleLogin(values.email, values.password)
-            .then(() => navigate('/'))
+            .then(() => navigate('/home'))
             .catch((err) => console.log(err));
     };
 
