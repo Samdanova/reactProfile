@@ -8,13 +8,6 @@ interface IAuthProps {
     loggedIn: boolean;
 }
 
-interface iContacts {
-    id: number;
-    name: string;
-    mobile: number;
-    email: string;
-}
-
 function Auth({ children, loggedIn }: IAuthProps) {
     if (!loggedIn) {
         return <Navigate to="/login" />;

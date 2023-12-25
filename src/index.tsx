@@ -17,11 +17,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <HashRouter>
     <Provider {...store}>
       <App />
     </Provider>
-    </HashRouter>
   </React.StrictMode>
 );
 reportWebVitals();
