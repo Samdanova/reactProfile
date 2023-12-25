@@ -11,9 +11,9 @@ data for entire (https://github.com/Samdanova/reactProfile/blob/main/src/login.t
 - [MobX](https://mobx.js.org/getting-started)
 - [Ant.desing](https://ant.design/)
 
-![github](https://github.com/Samdanova/reactProfile/blob/main/src/assets/image/login.png)
-![github](https://github.com/Samdanova/reactProfile/blob/main/src/assets/image/contacts.png)
-![github](https://github.com/Samdanova/reactProfile/blob/main/src/assets/image/add.png)
+![github](https://github.com/Samdanova/reactProfile/blob/main/src/assets/images/login.png)
+![github](https://github.com/Samdanova/reactProfile/blob/main/src/assets/images/contacts.png)
+![github](https://github.com/Samdanova/reactProfile/blob/main/src/assets/images/add.png)
 
 #### launching :
 
